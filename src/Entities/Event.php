@@ -7,6 +7,7 @@ namespace Paddle\SDK\Entities;
 use Paddle\SDK\Entities\Event\EventTypeName;
 use Paddle\SDK\Notifications\Entities\Entity as NotificationEntity;
 use Paddle\SDK\Notifications\Entities\EntityFactory;
+use Paddle\SDK\Notifications\Entities\UndefinedEntity;
 use Paddle\SDK\Notifications\Events\UndefinedEvent;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -23,8 +24,7 @@ abstract class Event implements Entity
 
     public static function from(array $data): self
     {
-        $type = explode('.', (string) $data['event_type']);
-        $identifier = str_replace('_', '', ucwords(implode('_', $type), '_'));
+        $identifier = EventNameResolver::resolve((string) $data['event_type']);
 
         /** @var class-string<Event> $event */
         $event = sprintf('\Paddle\SDK\Notifications\Events\%s', $identifier);
@@ -33,11 +33,16 @@ abstract class Event implements Entity
             $event = UndefinedEvent::class;
         }
 
+        // Create an undefined entity for undefined events.
+        $entity = $event === UndefinedEvent::class
+            ? UndefinedEntity::from($data['data'])
+            : EntityFactory::create($data['event_type'], $data['data']);
+
         return $event::fromEvent(
             $data['event_id'],
             EventTypeName::from($data['event_type']),
             DateTime::from($data['occurred_at']),
-            EntityFactory::create($data['event_type'], $data['data']),
+            $entity,
             $data['notification_id'] ?? null,
         );
     }

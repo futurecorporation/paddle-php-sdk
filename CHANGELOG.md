@@ -6,7 +6,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 Check our main [developer changelog](https://developer.paddle.com/?utm_source=dx&utm_medium=paddle-php-sdk) for information about changes to the Paddle Billing platform, the Paddle API, and other developer tools.
 
-## [Unreleased]
+## [1.9.0] - 2025-01-30
+
+### Added
+
+- Added `transactions.revise` operation to revise a transaction and added `revised_at` to `Transaction` entity, see [related changelog](https://developer.paddle.com/changelog/2024/revise-transaction-customer-information?utm_source=dx&utm_medium=paddle-php-sdk).
+- Added support for `transaction.revised` notification, see [related changelog](https://developer.paddle.com/changelog/2024/revise-transaction-customer-information?utm_source=dx&utm_medium=paddle-php-sdk).
+- Support for partial simulation payloads, see [related changelog](https://developer.paddle.com/changelog/2025/existing-data-simulations?utm_source=dx&utm_medium=paddle-php-sdk)
+
+### Fixed
+- Handle known entity types for events that are not supported by the current SDK version. `UndefinedEvent` will always return an `UndefinedEntity`.
+
+## [1.8.0] - 2024-12-19
+
+### Added
+
+- Added `on_resume` support to subscription resume and pause operations
+
+## [1.7.2] - 2024-12-17
+
+### Fixed
+
+- Adjustment items can be omitted for when adjustment type is full
+
+## [1.7.1] - 2024-12-13
+
+### Fixed
+
+- Subscription discount now supports null `starts_at`
+
+## [1.7.0] - 2024-12-11
+
+### Added
+
+- Support for adjustment type, see [related changelog](https://developer.paddle.com/changelog/2024/refund-credit-full-total?utm_source=dx&utm_medium=paddle-php-sdk)
+- Added Vietnamese Dong (`VND`) as a supported currency for payments [related changelog](https://developer.paddle.com/changelog/2024/vietnamese-dong-vnd-supported-currency?utm_source=dx&utm_medium=paddle-php-sdk)
+
+## [1.6.0] - 2024-12-05
 
 ### Added
 
